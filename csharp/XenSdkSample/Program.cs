@@ -43,7 +43,8 @@ namespace XenSdkSample
             {
                 if (args.Length < 3)
                 {
-                    outputLogger.Log("Required arguments: host-ip username password");
+                    outputLogger.Log("Required arguments: hostIpAddress[:port] username password\n" +
+                                     "If the port is omitted, 443 is used.\n");
                     return;
                 }
 
@@ -54,8 +55,12 @@ namespace XenSdkSample
                 Session session = null;
                 try
                 {
-                    string hostUrl = args[0], username = args[1], password = args[2];
-                    session = new Session(hostUrl);
+                    var parts = args[0].Split([':'], StringSplitOptions.RemoveEmptyEntries);
+                    var host = parts[0];
+                    var port = parts.Length == 2 && int.TryParse(parts[1], out var result) ? result : 443;
+                    var username = args[1];
+                    var password = args[2];
+                    session = new Session(host, port);
                     session.login_with_password(username, password, "", "XenSdkSample");
 
                     int pass = 0, fail = 0;
