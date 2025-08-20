@@ -49,7 +49,7 @@ namespace XenSdkSample
 
                 //Trust all certificates. This is a test workaround. DO NOT USE IN PRODUCTION CODE!
                 ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
                 Session session = null;
                 try
